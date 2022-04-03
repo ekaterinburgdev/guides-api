@@ -1,0 +1,1 @@
+SECTIONS = [{ "name" : "Раздел 1. Покрытия", "id" : "4abb0781ddb941d1b45f9bb16483ef1b" }]
