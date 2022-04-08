@@ -12,8 +12,8 @@ docker-compose up -d
 
 Чтобы всё работало хорошо сейчас нужно запустить миграции и заполнить БД (пока что. Позже сделаю, чтобы всё само работало). Обязательно выполните:
 ``` bash
-docker-compose exec manuals manage.py migrate
-docker-compose exec manuals manage.py init_db_check
+docker-compose exec manuals python manage.py migrate
+docker-compose exec manuals python manage.py init_db_check
 ```
 
 По умолчанию стоит внешний порт 48655
