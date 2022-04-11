@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -136,3 +138,7 @@ AUTH_USER_MODEL = "app.AdminUser"
 CRONJOBS = [
     ('*/1 * * * *', 'app.db_check')
 ]
+
+ALLOWED_HOSTS=['*']
+2
+CORS_ORIGIN_ALLOW_ALL = True
