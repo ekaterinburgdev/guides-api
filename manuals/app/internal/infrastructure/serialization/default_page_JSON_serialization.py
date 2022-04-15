@@ -13,7 +13,6 @@ def serialize_page_element(page_element_id):
     children_content = list(map(lambda x: {x: serialize_page_element(x)}, element_children["children"]))
 
     serialized_element = {
-        "id": page_element_id,
         "type": element_type,
         "content": element_content["content"],
         "children": children_content,
