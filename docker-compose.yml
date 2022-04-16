@@ -7,7 +7,7 @@ services:
       - ./manuals/.env
   manuals:
     container_name: app-container
-    image: app:4
+    image: manuals
     build: ./manuals
     command: python manage.py runserver 0.0.0.0:8080
     ports:
