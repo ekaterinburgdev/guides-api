@@ -2,11 +2,12 @@ from app.internal.infrastructure.notion_client import notion_client
 from app.models import PageElement
 
 from .content_getters import get_default_element_content, get_image_element_content
-from .contents import SAMPLE_PAGE, SECTIONS
+from .contents import SAMPLE_PAGE, SECTIONS, GENERAL_PROVISIONS
 
 
 def check_db():
     check_page(SAMPLE_PAGE["id"])
+    check_page(GENERAL_PROVISIONS["id"])
     for section in SECTIONS:
         check_page(section["id"])
 
