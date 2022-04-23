@@ -1,9 +1,11 @@
-from app.internal.infrastructure.db_check.contents import SAMPLE_PAGE, SECTIONS, GENERAL_PROVISIONS
+from app.internal.infrastructure.db_check.contents import INFRASTRUCTURE_PAGES, SECTIONS
 from django.http import JsonResponse
 from django.views import View
+
+ALL_OPTIONS = SECTIONS.copy()
+ALL_OPTIONS.extend(INFRASTRUCTURE_PAGES)
 
 
 class optionsView(View):
     def get(self, request):
-        options = {"sample_page": SAMPLE_PAGE, "general_provisions" : GENERAL_PROVISIONS, "sections": SECTIONS}
-        return JsonResponse(options)
+        return JsonResponse({"options": ALL_OPTIONS})
