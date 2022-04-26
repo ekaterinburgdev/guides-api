@@ -8,12 +8,12 @@ services:
     volumes:
       - postgres_manuals_data:/var/lib/postgresql/data
   manuals:
-    container_name: app-container
+    container_name: manuals-container
     image: manuals
     build: ./manuals
     command: python manage.py runserver 0.0.0.0:8080
     ports:
-      - 48655:8080
+      - 48700:8080
     depends_on:
       - db
     volumes:
