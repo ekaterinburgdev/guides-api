@@ -8,7 +8,7 @@ def get_image_element_content(item):
     image_id = item["id"]
     image_name = f"{image_id}.png"
     image_location = os.path.join(STATIC_DIR, image_name)
-    urllib.request.urlretrieve(item["image"]["file"]["url"], os.path.join(BASE_DIR, image_location))
+    urllib.request.urlretrieve(item["image"]["file"]["url"], image_location)
     return {"image_name": image_name, "image_data": item["image"]}
 
 
