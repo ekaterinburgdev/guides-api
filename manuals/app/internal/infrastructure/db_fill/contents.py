@@ -1,3 +1,6 @@
+ROOT_PAGE_ID = "9d480691-5268-44ce-8e8e-fa39ac419e9f"
+
+
 SECTIONS = [
     {"name_ru": "Раздел 1. Покрытия", "name_en": "Section 1", "id": "4abb0781-ddb9-41d1-b45f-9bb16483ef1b"},
     {

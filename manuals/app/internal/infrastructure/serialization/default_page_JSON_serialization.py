@@ -1,23 +1,28 @@
 from app.models import PageElement
 
-from .constants import FOLDER_TYPES
+from .constants import ESCAPE_TYPES, FOLDER_TYPES
 
 
-def serialize_page_element(page_element_id):
-    page_element = PageElement.objects.filter(id=page_element_id)
-    if len(page_element) == 0:
-        print(f"ALARM!!!!!!!!! {page_element_id} element is missing!!!!")
-        return {"Missing content": "None"}
+def serialize_page_element_by_id(page_element_id):
+    page_element = PageElement.objects.filter(id=page_element_id).first()
+    return serialize_page_element(page_element)
 
-    page_element = page_element.first()
+
+def serialize_page_element(page_element):
+    if not page_element:
+        print(f"ALARM!!!!!!!!! {page_element} element is missing!!!!")
+        return None
+
     element_type = page_element.type
     element_content = page_element.content
-    element_children = page_element.children
-    children_content = list(map(lambda x: serialize_page_element(x), element_children["children"]))
+    element_children = page_element.children.all()
+    children_content = list(
+        map(lambda x: serialize_page_element(x), filter(lambda x: x.type not in ESCAPE_TYPES, element_children))
+    )
     children_content = pack_lists(children_content)
 
     serialized_element = {
-        "id": page_element_id,
+        "id": page_element.id,
         "type": element_type,
         "content": element_content["content"],
         "children": children_content,
