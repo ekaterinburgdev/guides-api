@@ -1,8 +1,10 @@
-from app.internal.infrastructure.notion_client import notion_client
+from app.internal.infrastructure.notion_client import NotionClient
 from app.models import PageElement
 
-from .content_getters import get_default_element_content, get_image_element_content
+from .content_getters import get_default_element_content, get_image_element_content_webp
 from .contents import INFRASTRUCTURE_PAGES, SECTIONS
+
+notion_client = NotionClient().notion_client
 
 
 def check_db():
@@ -29,7 +31,7 @@ def update_element(page_element, edited_time):
     element_id = page_element["id"]
     element_type = page_element["type"]
     if element_type == "image":
-        element_content = get_image_element_content(page_element)
+        element_content = get_image_element_content_webp(page_element)
     else:
         element_content = get_default_element_content(page_element, element_type)
 
@@ -60,13 +62,12 @@ def save_element(element_id, element_type, element_content, element_children, ed
 
 def edited_check(item):
     id = item["id"]
-    db_item = PageElement.objects.filter(id=id)
-    if len(db_item) == 0:
+    db_item = PageElement.objects.filter(id=id).first()
+    if not db_item:
         if "last_edited_time" not in item.keys():
             return True, ""
         return True, item["last_edited_time"]
 
     last_edited_time = item["last_edited_time"]
-    db_item = db_item.first()
     db_last_edited_time = db_item.last_edited
     return (last_edited_time != db_last_edited_time), item["last_edited_time"]

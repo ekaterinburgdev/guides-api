@@ -1,2 +1,10 @@
 manuals/.env
 manuals/app/static/*
+.vscode/
+/venv/
+media/
+local_settings.py
+__pycache__
+*.pyc
+/.env*
+.idea

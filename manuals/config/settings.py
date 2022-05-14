@@ -135,7 +135,7 @@ STATIC_ROOT = "/app/static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "app.AdminUser"
 
-CRONJOBS = [("*/1 * * * *", "app.db_check")]
+# CRONJOBS = [("*/1 * * * *", "app.db_check")]
 
 ALLOWED_HOSTS = ["*"]
 2
