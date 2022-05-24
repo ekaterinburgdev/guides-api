@@ -23,11 +23,11 @@ def tree_json(id):
         child = tree_json(child_node.id)
         children.append(child)
 
-    if (id != ROOT_PAGE_ID):
-        ordered_children = list(filter(lambda x: "properties" in x and "order" in x["properties"] and "number" in x["properties"]["order"], children))
-        if len(ordered_children) == len(children):
-            children = sorted(children, key=lambda x: x["properties"]["order"]["number"])
-    else:
+    
+    ordered_children = list(filter(lambda x: "properties" in x and "order" in x["properties"] and "number" in x["properties"]["order"], children))
+    if len(ordered_children) == len(children):
+        children = sorted(children, key=lambda x: x["properties"]["order"]["number"])
+    elif id == ROOT_PAGE_ID:
         children = sorted(children, key=lambda x: ROOT_PAGE_CHILDREN_ORDER[x["id"]] if x["id"] in ROOT_PAGE_CHILDREN_ORDER else ROOT_PAGE_CHILDREN_ORDER["other"])
 
     return {

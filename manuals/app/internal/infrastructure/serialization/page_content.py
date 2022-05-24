@@ -6,6 +6,8 @@ def page_content_serialization_by_url(url):
     if not path_elements:
         return None
     root_url = path_elements[0]
+    if root_url != "root":
+        return None
     root_node = PageTreeNode.objects.filter(url=root_url).first()
     if not root_node:
         return None
