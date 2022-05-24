@@ -18,7 +18,7 @@ def page_content_serialization_by_url(url):
 
 
 def get_url_node(url, parent_object):
-    node = PageTreeNode.objects.filter(url=url).first()
+    node = parent_object.child_nodes.filter(url=url).first()
     if not node:
         return None
     if node not in parent_object.child_nodes.all():

@@ -10,4 +10,5 @@ urlpatterns = [
     path("test/dbretrieve", test_handler.DbRetrieveView.as_view()),
     path("test/dbchildren", test_handler.DbChildrenView.as_view()),
     path("tree", options_handler.TreeView.as_view()),
+    path("test/tree", test_handler.ReadableTreeView.as_view()),
 ]
