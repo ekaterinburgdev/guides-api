@@ -3,7 +3,24 @@ from app.models import PageElement
 from .constants import ESCAPE_TYPES, FOLDER_TYPES
 
 
+class HeadingCounter:
+    def __init__(self):
+        self._heading_counter = 0
+    
+    def dispatch_counter(self):
+        self._heading_counter = 0
+
+    def next_index(self):
+        id = self._heading_counter
+        self._heading_counter += 1
+        return id
+
+
+heading_counter = HeadingCounter()
+
+
 def serialize_page_element_by_id(page_element_id):
+    heading_counter.dispatch_counter()
     page_element = PageElement.objects.filter(id=page_element_id).first()
     return serialize_page_element(page_element)
 
@@ -21,8 +38,12 @@ def serialize_page_element(page_element):
     )
     children_content = pack_lists(children_content)
 
+    id = page_element.id
+    if element_type.startswith("heading_"):
+        id = heading_counter.next_index()
+
     serialized_element = {
-        "id": page_element.id,
+        "id": id,
         "type": element_type,
         "content": element_content["content"],
         "children": children_content,
