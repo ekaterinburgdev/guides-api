@@ -1,9 +1,8 @@
 import json
 
-from app.internal.infrastructure.notion_client import NotionClient
 from app.internal.infrastructure.db_fill.contents import ROOT_PAGE_ID
+from app.internal.infrastructure.notion_client import NotionClient
 from app.internal.infrastructure.serialization.page_tree import tree_json
-
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 from django.views import View
 
@@ -57,6 +56,4 @@ class ReadableTreeView(View):
         tree = tree_json(ROOT_PAGE_ID)
         if not tree:
             return HttpResponseNotFound()
-        return HttpResponse(
-                json.dumps(tree, indent=4, ensure_ascii=False), content_type="application/json"
-            )
+        return HttpResponse(json.dumps(tree, indent=4, ensure_ascii=False), content_type="application/json")

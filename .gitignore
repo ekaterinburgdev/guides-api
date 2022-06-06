@@ -5,6 +5,7 @@ manuals/app/static/*
 media/
 local_settings.py
 *__pycache__
+__pycache__
 *.pyc
 /.env*
 .idea

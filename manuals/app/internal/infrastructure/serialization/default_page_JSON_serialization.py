@@ -15,7 +15,7 @@ def serialize_page_element(page_element):
 
     element_type = page_element.type
     element_content = page_element.content
-    element_children = page_element.children.all()
+    element_children = page_element.children.order_by("order").all()
     children_content = list(
         map(lambda x: serialize_page_element(x), filter(lambda x: x.type not in ESCAPE_TYPES, element_children))
     )

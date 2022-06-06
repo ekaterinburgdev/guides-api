@@ -15,6 +15,7 @@ class PageElement(models.Model):
     children = models.ManyToManyField("PageElement", symmetrical=False)
     type = models.CharField(max_length=30)
     last_edited = models.DateTimeField(blank=False)
+    order = models.IntegerField(db_index=True, default=0)
 
 
 class PageTreeNode(models.Model):
