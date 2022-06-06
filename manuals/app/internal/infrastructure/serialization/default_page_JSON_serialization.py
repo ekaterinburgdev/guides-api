@@ -6,9 +6,6 @@ from .constants import ESCAPE_TYPES, FOLDER_TYPES
 class HeadingCounter:
     def __init__(self):
         self._heading_counter = 0
-    
-    def dispatch_counter(self):
-        self._heading_counter = 0
 
     def next_index(self):
         id = self._heading_counter
@@ -16,16 +13,13 @@ class HeadingCounter:
         return id
 
 
-heading_counter = HeadingCounter()
-
-
 def serialize_page_element_by_id(page_element_id):
-    heading_counter.dispatch_counter()
+    heading_counter = HeadingCounter()
     page_element = PageElement.objects.filter(id=page_element_id).first()
-    return serialize_page_element(page_element)
+    return serialize_page_element(page_element, heading_counter)
 
 
-def serialize_page_element(page_element):
+def serialize_page_element(page_element, heading_counter):
     if not page_element:
         print(f"ALARM!!!!!!!!! {page_element} element is missing!!!!")
         return None
@@ -34,7 +28,7 @@ def serialize_page_element(page_element):
     element_content = page_element.content
     element_children = page_element.children.order_by("order").all()
     children_content = list(
-        map(lambda x: serialize_page_element(x), filter(lambda x: x.type not in ESCAPE_TYPES, element_children))
+        map(lambda x: serialize_page_element(x, heading_counter), filter(lambda x: x.type not in ESCAPE_TYPES, element_children))
     )
     children_content = pack_lists(children_content)
 
