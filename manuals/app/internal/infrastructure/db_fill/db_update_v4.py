@@ -71,8 +71,14 @@ def save_element(
     db_item = PageElement(
         id=element_id, type=element_type, content={"content": element_content}, last_edited=edited_time, order=order
     )
+    print(element_children)
+    element_children = list(filter(lambda x: x, element_children))
     db_item.save()
-    db_item.children.add(*element_children)
+    element_children_ids = [x.id for x in element_children]
+    children_to_add = list(filter(lambda x: not db_item.children.filter(id=x).exists(), element_children_ids))
+    children_to_exclude = db_item.children.exclude(id__in=element_children_ids).all()
+    db_item.children.remove(*children_to_exclude)
+    db_item.children.add(*children_to_add)
     return db_item
 
 

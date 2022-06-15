@@ -25,3 +25,4 @@ class PageTreeNode(models.Model):
     child_nodes = models.ManyToManyField("PageTreeNode", symmetrical=False)
     last_edited = models.DateTimeField(blank=False)
     url = models.CharField(max_length=30, null=True, default=None, blank=False, db_index=True)
+    show = models.BooleanField(default=True)

@@ -28,7 +28,10 @@ def serialize_page_element(page_element, heading_counter):
     element_content = page_element.content
     element_children = page_element.children.order_by("order").all()
     children_content = list(
-        map(lambda x: serialize_page_element(x, heading_counter), filter(lambda x: x.type not in ESCAPE_TYPES, element_children))
+        map(
+            lambda x: serialize_page_element(x, heading_counter),
+            filter(lambda x: x.type not in ESCAPE_TYPES, element_children),
+        )
     )
     children_content = pack_lists(children_content)
 

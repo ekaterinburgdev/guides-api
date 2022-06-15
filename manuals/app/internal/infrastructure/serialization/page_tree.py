@@ -23,6 +23,18 @@ def tree_json(id):
         child = tree_json(child_node.id)
         children.append(child)
 
+    children = list(
+        filter(
+            lambda x: (
+                "properties" not in x
+                or "Published" not in x["properties"]
+                or "checkbox" not in x["properties"]["Published"]
+            )
+            or x["properties"]["Published"]["checkbox"],
+            children,
+        )
+    )
+
     ordered_children = list(
         filter(
             lambda x: "properties" in x and "order" in x["properties"] and "number" in x["properties"]["order"],
@@ -31,7 +43,7 @@ def tree_json(id):
     )
     if len(ordered_children) == len(children):
         children = sorted(children, key=lambda x: x["properties"]["order"]["number"])
-    elif id == ROOT_PAGE_ID:
+    else:
         children = sorted(
             children,
             key=lambda x: ROOT_PAGE_CHILDREN_ORDER[x["id"]]
