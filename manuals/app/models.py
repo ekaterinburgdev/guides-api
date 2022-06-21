@@ -26,3 +26,8 @@ class PageTreeNode(models.Model):
     last_edited = models.DateTimeField(blank=False)
     url = models.CharField(max_length=30, null=True, default=None, blank=False, db_index=True)
     show = models.BooleanField(default=True)
+
+
+class PrerenderedPageElement(models.Model):
+    id = models.TextField(primary_key=True)
+    content = models.JSONField()

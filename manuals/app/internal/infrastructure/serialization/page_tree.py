@@ -42,7 +42,7 @@ def tree_json(id):
         )
     )
     if len(ordered_children) == len(children):
-        children = sorted(children, key=lambda x: x["properties"]["order"]["number"])
+        children = sorted(children, key=lambda x: x["properties"]["order"]["number"] if x["properties"]["order"]["number"] else 9999)
     else:
         children = sorted(
             children,

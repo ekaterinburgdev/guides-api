@@ -138,5 +138,5 @@ AUTH_USER_MODEL = "app.AdminUser"
 CRONJOBS = [("0 * * * *", "app.full_pages_update")]
 
 ALLOWED_HOSTS = ["*"]
-2
+
 CORS_ORIGIN_ALLOW_ALL = True

@@ -10,35 +10,37 @@ from .contents import ROOT_PAGE_ID
 notion_client = NotionClient()
 
 
-def check_db(node: PageTreeNode = None):
+def check_db(node: PageTreeNode = None, force_update: bool=False):
     if not node:
         node = PageTreeNode.objects.filter(id=ROOT_PAGE_ID).first()
         if not node:
             raise Exception("No root page node")
-    check_page(node.id, node)
+    check_page(node.id, node, force_update=force_update)
     for child in node.child_nodes.all():
-        check_db(child)
+        check_db(child, force_update=force_update)
     return
 
 
-def check_page(id: str, node: PageTreeNode):
+def check_page(id: str, node: PageTreeNode, force_update: bool=False):
     page = notion_client.page(id)
-    check_page_element(page, 0, node=node)
+    check_page_element(page, 0, node=node, force_update=force_update)
 
 
-def check_page_element(page_element: dict, order: int, node: PageTreeNode = None):
+def check_page_element(page_element: dict, order: int, node: PageTreeNode = None, force_update: bool=False):
     print(page_element["id"])
     is_edited, edited_time = edited_check(page_element, node)
 
-    if is_edited:
-        new_element = update_element(page_element, edited_time, order)
+    if force_update or is_edited:
+        new_element = update_element(page_element, edited_time, order, force_update=force_update)
         if node:
             node.child_page = new_element
             node.save()
         return new_element
+    page = PageElement.objects.filter(id=page_element["id"]).first()
+    return page
 
 
-def update_element(page_element: dict, edited_time: datetime, order: int):
+def update_element(page_element: dict, edited_time: datetime, order: int, force_update: bool=False):
     element_id = page_element["id"]
     element_type = page_element["type"]
     if element_type == "image":
@@ -55,7 +57,7 @@ def update_element(page_element: dict, edited_time: datetime, order: int):
 
     for i in range(len(children["results"])):
         child = children["results"][i]
-        children_objects.append(check_page_element(child, i))
+        children_objects.append(check_page_element(child, i, force_update=force_update))
 
     return save_element(element_id, element_type, element_content, children_objects, edited_time, order)
 

@@ -1,4 +1,4 @@
-from app.models import PageElement
+from app.models import PageElement, PrerenderedPageElement
 
 from .constants import ESCAPE_TYPES, FOLDER_TYPES
 
@@ -14,6 +14,13 @@ class HeadingCounter:
 
 
 def serialize_page_element_by_id(page_element_id):
+    prerendered = PrerenderedPageElement.objects.filter(id=page_element_id).first()
+    if prerendered:
+        return prerendered.content
+    return forced_serialize_page_element_by_id(page_element_id)
+
+
+def forced_serialize_page_element_by_id(page_element_id):
     heading_counter = HeadingCounter()
     page_element = PageElement.objects.filter(id=page_element_id).first()
     return serialize_page_element(page_element, heading_counter)
