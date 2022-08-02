@@ -23,3 +23,6 @@ class NotionClient:
 
     def db_children(self, id):
         return self.notion_client.databases.query(id)
+    
+    def page_children_from_cursor(self, id, cursor_id):
+        return self.notion_client.blocks.children.list(id, start_cursor=cursor_id)

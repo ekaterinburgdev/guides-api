@@ -52,14 +52,30 @@ def update_element(page_element: dict, edited_time: datetime, order: int, force_
 
         return save_element(element_id, element_type, element_content, [], edited_time, order)
 
-    children = notion_client.page_children(element_id)
+    children = get_all_children(element_id)
     children_objects = []
 
-    for i in range(len(children["results"])):
+    for i in range(children):
         child = children["results"][i]
         children_objects.append(check_page_element(child, i, force_update=force_update))
 
     return save_element(element_id, element_type, element_content, children_objects, edited_time, order)
+
+
+def get_all_children(id: str) -> List:
+    children_data = notion_client.page_children(id)
+    children: List = children_data["results"]
+    if children_data["has_more"]:
+        children.extend(get_more_children(id, children_data["next_cursor"]))
+    return children
+
+
+def get_more_children(id: str, cursor: str) -> List:
+    children_data = notion_client.page_children_from_cursor(id, cursor)
+    children: List = children_data["results"]
+    if children_data["has_more"]:
+        children.extend(get_more_children(id, children_data["next_cursor"]))
+    return children
 
 
 def save_element(
@@ -68,8 +84,7 @@ def save_element(
     element_content: dict,
     element_children: List[PageElement],
     edited_time: datetime,
-    order: int,
-):
+    order: int):
     db_item = PageElement(
         id=element_id, type=element_type, content={"content": element_content}, last_edited=edited_time, order=order
     )
