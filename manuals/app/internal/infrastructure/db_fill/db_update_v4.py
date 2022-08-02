@@ -55,8 +55,8 @@ def update_element(page_element: dict, edited_time: datetime, order: int, force_
     children = get_all_children(element_id)
     children_objects = []
 
-    for i in range(children):
-        child = children["results"][i]
+    for i in range(len(children)):
+        child = children[i]
         children_objects.append(check_page_element(child, i, force_update=force_update))
 
     return save_element(element_id, element_type, element_content, children_objects, edited_time, order)

@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 import environ
 from django.conf import settings
@@ -24,5 +25,5 @@ class NotionClient:
     def db_children(self, id):
         return self.notion_client.databases.query(id)
     
-    def page_children_from_cursor(self, id, cursor_id):
+    def page_children_from_cursor(self, id, cursor_id) -> List:
         return self.notion_client.blocks.children.list(id, start_cursor=cursor_id)
