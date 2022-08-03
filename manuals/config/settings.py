@@ -26,6 +26,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 TG_CHAT_TO_LISTEN = env("TG_CHAT_TO_LISTEN")
+TG_MASTER_ID = env("TG_MASTER_ID")
 TG_BOT_TOKEN = env("TG_BOT_TOKEN")
 
 STATE = UpdateState()

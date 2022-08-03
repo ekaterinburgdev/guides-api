@@ -9,7 +9,7 @@ from app.internal.infrastructure.db_fill import db_update_v4, page_tree_update, 
 
 def update_pages(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
-    if chat_id != int(settings.TG_CHAT_TO_LISTEN):
+    if chat_id != int(settings.TG_CHAT_TO_LISTEN) and chat_id != int(settings.TG_MASTER_ID):
         context.bot.send_message(chat_id=chat_id, text="Я тебе не подчиняюсь, дорогуша...")
         return
     if not settings.STATE.available:
