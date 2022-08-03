@@ -18,6 +18,17 @@ services:
       - db
     volumes:
       - static_manuals_data:/app/static
+  bot:
+    container_name: manuals-bot-container
+    image: manuals
+    build: ./manuals
+    command: python manage.py start_bot
+    depends_on:
+      - db
+    ports:
+      - 8443:8443
+    volumes:
+      - static_manuals_data:/app/static
 
 volumes:
   postgres_manuals_data:

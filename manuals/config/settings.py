@@ -12,6 +12,8 @@ from pathlib import Path
 
 import environ
 
+from .update_state import UpdateState
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
@@ -23,6 +25,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
+TG_CHAT_TO_LISTEN = env("TG_CHAT_TO_LISTEN")
+TG_BOT_TOKEN = env("TG_BOT_TOKEN")
+
+STATE = UpdateState()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
