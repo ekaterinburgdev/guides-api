@@ -44,4 +44,4 @@ volumes:
     driver_opts:
        o: bind
        type: none
-       device: /usr/local/docker/manuals-static-volume
+       device: /usr/local/docker/manuals-static-volume/
