@@ -82,5 +82,5 @@ def convert_properties(properties: dict, id: str):
                 files.append(name)
             new_props[prop] = files
         else:
-            new_props["prop"] = value
+            new_props[prop] = value
     return new_props
