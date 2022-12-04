@@ -20,7 +20,7 @@ def force_update_pages(update: Update, context: CallbackContext):
     try:
         settings.STATE.block()
         page_tree_update.update_page_tree()
-        db_update_v4.check_db()
+        db_update_v4.check_db(force_update=True)
         prerender_page_elements.prerender_all()
         sleep(3)
         context.bot.send_message(chat_id=chat_id, text="Прикинь, всё получилось 0_о")

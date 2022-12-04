@@ -29,15 +29,9 @@ services:
       - 8443:8443
     volumes:
       - static_manuals_data:/app/static
-      - manuals_logs:./
+      - /usr/local/docker/manuals:/logs
 
 volumes:
-  manuals_logs:
-    driver: local
-    driver_opts:
-       o: bind
-       type: none
-       device: /usr/local/docker/manuals
   postgres_manuals_data:
   static_manuals_data:
     driver: local
