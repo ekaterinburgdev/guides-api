@@ -53,7 +53,7 @@ def save_jpg_image(url, id):
 def convert_jpg_to_webp(img_path, new_img_name):
     new_name = f"{new_img_name}.webp"
     new_image_location = os.path.join(STATIC_DIR, new_name)
-    Image.open(img_path).convert("RGB").save(f"{new_image_location}", "webp")
+    Image.open(img_path).convert("RGBA").save(f"{new_image_location}", "webp")
     return new_name
 
 

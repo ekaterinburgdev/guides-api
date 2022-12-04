@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 from telegram import Update
 from telegram.ext import CallbackContext
@@ -23,7 +24,8 @@ def update_pages(update: Update, context: CallbackContext):
         prerender_page_elements.prerender_all()
         sleep(3)
         context.bot.send_message(chat_id=chat_id, text="Вроде обновился")
-    except:
+    except Exception as e:
+        logging.error(f"Caching error; {str(e)}")
         context.bot.send_message(chat_id=chat_id, text="Чета поломалось")
     finally:
         settings.STATE.unblock()
