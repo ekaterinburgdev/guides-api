@@ -12,6 +12,8 @@ class Command(BaseCommand):
                             format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                             datefmt='%H:%M:%S',
                             level=logging.DEBUG)
+        logging.info("Starting bot")
+        
 
-        updater = BotUpdater(settings.TG_BOT_TOKEN)
-        updater.start_polling()
+        # updater = BotUpdater(settings.TG_BOT_TOKEN)
+        # updater.start_polling()

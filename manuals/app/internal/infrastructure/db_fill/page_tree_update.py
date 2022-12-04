@@ -2,7 +2,7 @@ from datetime import datetime
 
 from app.internal.infrastructure.notion_client import NotionClient
 from app.models import PageTreeNode
-from manuals.app.internal.infrastructure.db_fill.file_save import save_file
+from .file_save import save_file
 
 from .content_getters import save_webp_cover
 from .contents import ROOT_PAGE_ID
@@ -54,7 +54,7 @@ def build_child_databases_tree(id):
             existedNode = PageTreeNode.objects.filter(id=db_child_id).first()
             if existedNode:
                 db_child_child_page = existedNode.child_page
-            new_props = convert_properties(db_child_properties)
+            new_props = convert_properties(db_child_properties, db_child_id)
             db_child_page_node = PageTreeNode(
                 id=db_child_id,
                 child_page=db_child_child_page,
@@ -70,14 +70,15 @@ def build_child_databases_tree(id):
             children.append(db_child_page_node)
     return children
 
-def convert_properties(properties: dict):
+def convert_properties(properties: dict, id: str):
     new_props = dict()
     for prop in properties.keys():
         value = properties[prop]
         if value["type"] == "files":
             files = []
-            for file in value["files"]:
-                name = save_file(file)
+            for i in range(len(value["files"])):
+                file = value["files"][i]
+                name = save_file(file, f"{id}_{prop}_{i}")
                 files.append(name)
             new_props[prop] = files
         else:
