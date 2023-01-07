@@ -29,6 +29,7 @@ services:
       - 8443:8443
     volumes:
       - static_manuals_data:/app/static
+      - /usr/local/docker/manuals:/logs
 
 volumes:
   postgres_manuals_data:
