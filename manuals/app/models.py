@@ -23,5 +23,9 @@ class PageTreeNode(models.Model):
 
 class PrerenderedPageElement(models.Model):
     id = models.TextField(primary_key=True)
+    guide_id = models.TextField(default="")
     content = models.JSONField()
+    nodes_trace = models.JSONField(default=dict)
+    section_name = models.TextField(default="")
     text_content = models.TextField(default="")
+    url = models.CharField(max_length=70, null=True, default="", blank=False, db_index=True)
