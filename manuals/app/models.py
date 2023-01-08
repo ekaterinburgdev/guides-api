@@ -24,3 +24,4 @@ class PageTreeNode(models.Model):
 class PrerenderedPageElement(models.Model):
     id = models.TextField(primary_key=True)
     content = models.JSONField()
+    text_content = models.TextField(default="")
