@@ -45,12 +45,12 @@ def search_pattern(pattern: str, search_limit: int, guide_suggestions_limit: int
             continue
         if not current_guide_matches:
             all_matches[guide_id] = []
-        matches: List[str] = re.findall(f"((?:[^\\s{PUNCTS}]*[\\s{PUNCTS}]+){{0,5}}[^\\s{PUNCTS}]*{pattern}[^\\s{PUNCTS}]*(?:[\\s{PUNCTS}]+[^\\s{PUNCTS}]*){{0,5}})", result.text_content)
+        matches: List[str] = re.findall(f"((?:[^\\s{PUNCTS}]+[\\s{PUNCTS}]+){{0,5}}[^\\s{PUNCTS}]*{pattern}[^\\s{PUNCTS}]*(?:[\\s{PUNCTS}]+[^\\s{PUNCTS}]*){{0,5}})", result.text_content, re.DOTALL | re.IGNORECASE)
         section_name = result.section_name
         url = result.url
         suggestions = []
         for match in matches[:search_limit]:
-            neighbours = re.search(f"(.*){pattern}(.*)", match, re.DOTALL)
+            neighbours = re.search(f"(.*){pattern}(.*)", match, re.DOTALL | re.IGNORECASE)
             if neighbours:
                 neighbours = neighbours.groups()
             else:
