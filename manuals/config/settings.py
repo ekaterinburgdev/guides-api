@@ -7,6 +7,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import logging
 import os
 from pathlib import Path
 
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "app",
 ]
 
@@ -147,3 +149,11 @@ CRONJOBS = [("0 * * * *", "app.full_pages_update")]
 ALLOWED_HOSTS = ["*"]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+logs = os.path.join("logs", "logs_guides.log")
+logging.basicConfig(filename=logs,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+logging.info("Configuring app")
