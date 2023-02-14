@@ -3,7 +3,7 @@ from typing import List
 
 from app.internal.infrastructure.notion_client import NotionClient
 from app.models import PageElement, PageTreeNode
-from manuals.app.internal.infrastructure.db_fill.update_request import UpdateRequest
+from .update_request import UpdateRequest
 
 from .content_getters import get_default_element_content, get_image_element_content_webp
 from .contents import ROOT_PAGE_ID
