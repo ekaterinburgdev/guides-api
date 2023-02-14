@@ -85,3 +85,13 @@ def test(update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=chat_id, text=msg)
     finally:
         settings.STATE.unblock()
+
+def help(update: Update, context: CallbackContext):
+    chat_id = update.effective_chat.id
+    msg = '''Умею только апдейтить (я туповат)
+    \n/update --force [page_url]
+    \nФлаг --force опциональный, вкдючает форс - обновить все элементы страницы вне зависимости от времени последнего изменения.
+    \nАргумент page_url опциональный. Если указан, то обновится страница по указанному урлу (в теории...). 
+    Если не указан, то обновится всё.
+    \nПример использования: "/update --force facades/signboards"'''
+    context.bot.send_message(chat_id=chat_id, text=msg)
