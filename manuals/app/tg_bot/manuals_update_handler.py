@@ -45,9 +45,11 @@ def update(update: Update, context: CallbackContext):
 def help(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     msg = '''Умею только апдейтить (я туповат)
-\n/update --force [page_url]
+\n/update [-f|--force] [page_url]
 \nФлаг --force опциональный, вкдючает форс - обновить все элементы страницы вне зависимости от времени последнего изменения. АПАСНА!
 \nАргумент page_url опциональный. Если указан, то обновится страница по указанному урлу (в теории...).
 Если не указан, то обновится всё.
-\nПример использования: "/update --force facades/signboards"'''
+\nПример использования: "/update -f facades/signboards"
+\nP.S. Я невовремя обратил внимание, что телега, если набрать подряд два дефиса, превращает их в тире.
+Если стереть после этого один символ, то два дефиса вернутся. Не споткнитесь, солнышки!'''
     context.bot.send_message(chat_id=chat_id, text=msg)

@@ -11,7 +11,7 @@ class UpdateRequest:
 def from_command(args: List[str]) -> Tuple[Optional[UpdateRequest], Optional[str]]:
     #TODO: options
     options = list(filter(lambda x: x.startswith("--"), args))
-    force = "--force" in options
+    force = "--force" in options or "-f" in options
 
     page_urls = list(filter(lambda x: not x.startswith("--"), args))
     if len(page_urls) == 0:
