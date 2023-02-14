@@ -51,3 +51,9 @@ def update_pages(update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=chat_id, text="Чета поломалось")
     finally:
         settings.STATE.unblock()
+
+def test(update: Update, context: CallbackContext):
+    chat_id = update.effective_chat.id
+    message = update.message
+    eff_message = update.effective_message
+    context.bot.send_message(chat_id=chat_id, text=f"yo\n{message}\n{eff_message}")

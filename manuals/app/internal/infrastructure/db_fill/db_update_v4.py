@@ -3,12 +3,16 @@ from typing import List
 
 from app.internal.infrastructure.notion_client import NotionClient
 from app.models import PageElement, PageTreeNode
+from manuals.app.internal.infrastructure.db_fill.update_request import UpdateRequest
 
 from .content_getters import get_default_element_content, get_image_element_content_webp
 from .contents import ROOT_PAGE_ID
 
 notion_client = NotionClient()
 
+
+def check_db(request: UpdateRequest):
+    return check_db(request.page_tree_node, request.force_update)
 
 def check_db(node: PageTreeNode = None, force_update: bool=False):
     if not node:
