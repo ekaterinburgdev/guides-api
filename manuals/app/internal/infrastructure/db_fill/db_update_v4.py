@@ -11,7 +11,7 @@ from .contents import ROOT_PAGE_ID
 notion_client = NotionClient()
 
 
-def check_db(request: UpdateRequest):
+def check_db_with_request(request: UpdateRequest):
     return check_db(request.page_tree_node, request.force_update)
 
 def check_db(node: PageTreeNode = None, force_update: bool=False):

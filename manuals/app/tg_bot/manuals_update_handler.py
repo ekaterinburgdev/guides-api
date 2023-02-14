@@ -30,7 +30,7 @@ def update(update: Update, context: CallbackContext):
     try:
         settings.STATE.block()
         page_tree_update.update_page_tree()
-        db_update_v4.check_db(request)
+        db_update_v4.check_db_with_request(request)
         prerender_page_elements.prerender_all()
         sleep(3)
         msg = "Прикинь, всё получилось 0_о" if request.force_update else "Вроде обновился"
