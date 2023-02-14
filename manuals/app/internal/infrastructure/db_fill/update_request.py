@@ -1,4 +1,4 @@
-from manuals.app.models import PageTreeNode
+from app.models import PageTreeNode
 
 
 class UpdateRequest:
