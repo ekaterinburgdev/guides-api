@@ -8,6 +8,7 @@ UNKNOWN_SECTION_NAME = "Неизвестная секция"
 
 
 def prerender_all():
+    print("[Prerender start]")
     PrerenderedPageElement.objects.all().delete()
     id = ROOT_PAGE_ID
     node = PageTreeNode.objects.filter(id=id).first()

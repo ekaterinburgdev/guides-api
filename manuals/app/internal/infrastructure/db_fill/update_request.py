@@ -4,13 +4,13 @@ from app.internal.infrastructure.serialization.page_content import get_node_by_u
 
 
 class UpdateRequest:
-    def __init__(self, page_tree_node: PageTreeNode = None, force_update: bool = False) -> None:
+    def __init__(self, page_tree_node: Optional[PageTreeNode] = None, force_update: bool = False) -> None:
         self.page_tree_node = page_tree_node
         self.force_update = force_update
     
 def from_command(args: List[str]) -> Tuple[Optional[UpdateRequest], Optional[str]]:
     #TODO: options
-    options = list(filter(lambda x: x.startswith("--"), args))
+    options = list(filter(lambda x: x.startswith("-"), args))
     force = "--force" in options or "-f" in options
 
     page_urls = list(filter(lambda x: not x.startswith("--"), args))

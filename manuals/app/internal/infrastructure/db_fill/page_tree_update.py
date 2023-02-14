@@ -11,6 +11,7 @@ notion_client = NotionClient()
 
 
 def update_page_tree():
+    print("[Tree update start]")
     root_page_info = notion_client.page(ROOT_PAGE_ID)
     root_page_children = build_child_databases_tree(ROOT_PAGE_ID)
     root_page_last_edited_time = datetime.fromisoformat(root_page_info["last_edited_time"][:-1] + "+00:00")

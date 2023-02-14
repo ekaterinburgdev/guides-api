@@ -19,6 +19,7 @@ def check_db(node: PageTreeNode = None, force_update: bool=False):
         node = PageTreeNode.objects.filter(id=ROOT_PAGE_ID).first()
         if not node:
             raise Exception("No root page node")
+    print(f"[Update start: {node.id}]")
     check_page(node.id, node, force_update=force_update)
     for child in node.child_nodes.all():
         check_db(child, force_update=force_update)
