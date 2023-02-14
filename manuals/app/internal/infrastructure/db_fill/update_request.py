@@ -1,5 +1,6 @@
 from typing import List, Optional, Tuple
 from app.models import PageTreeNode
+from app.internal.infrastructure.serialization.page_content import get_node_by_url
 
 
 class UpdateRequest:
@@ -12,16 +13,16 @@ def from_command(args: List[str]) -> Tuple[Optional[UpdateRequest], Optional[str
     options = list(filter(lambda x: x.startswith("--"), args))
     force = "--force" in options
 
-    page_ids = list(filter(lambda x: not x.startswith("--"), args))
-    if len(page_ids) == 0:
+    page_urls = list(filter(lambda x: not x.startswith("--"), args))
+    if len(page_urls) == 0:
         return UpdateRequest(None, force), None
     
-    if len(page_ids) > 1:
-        return None, f"Я не понимаю, кого из них апдейтить: {', '.join(page_ids)}"
+    if len(page_urls) > 1:
+        return None, f"Я не понимаю, кого из них апдейтить: {', '.join(page_urls)}"
     
-    page_id = page_ids[0]
-    node = PageTreeNode.objects.filter(id=page_id).first()
+    page_url = page_urls[0]
+    node = get_node_by_url(page_url)
     if not node:
-        return None, f"У меня нет страницы с таким идентификатором: {page_id}"
+        return None, f"У меня нет страницы по такому пути: {page_url}"
     
     return UpdateRequest(node, force), None
