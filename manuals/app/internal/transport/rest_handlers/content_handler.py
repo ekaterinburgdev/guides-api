@@ -1,5 +1,5 @@
 from app.internal.infrastructure.serialization.default_page_JSON_serialization import serialize_page_element_by_id
-from app.internal.infrastructure.serialization.page_content import page_content_serialization_by_url
+from app.internal.infrastructure.serialization.page_content import get_node_by_url
 from django.http import Http404, HttpResponseBadRequest, JsonResponse
 from django.views import View
 
@@ -19,7 +19,7 @@ class ContentView(View):
 
 class UrlContentView(View):
     def get(self, request, suburl):
-        node = page_content_serialization_by_url(suburl)
+        node = get_node_by_url(suburl)
         if not node:
             return HttpResponseBadRequest("No such url")
         page_content = serialize_page_element_by_id(node.id)

@@ -1,18 +1,18 @@
 from app.models import PageTreeNode
 
 
-def page_content_serialization_by_url(url):
+def get_node_by_url(url: str):
     path_elements = url.split("/")
     if not path_elements:
         return None
     root_url = path_elements[0]
-    if root_url != "root":
-        return None
-    root_node = PageTreeNode.objects.filter(url=root_url).first()
+    if root_url == "root":
+        path_elements = path_elements[1:]
+    root_node = PageTreeNode.objects.filter(url="root").first()
     if not root_node:
         return None
     curr = root_node
-    for next in path_elements[1:]:
+    for next in path_elements:
         curr = get_url_node(next, curr)
         if not curr:
             return None

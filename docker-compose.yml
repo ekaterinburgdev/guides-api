@@ -2,12 +2,14 @@ version: "3.9"
 
 services:
   db:
+    profiles: ["no-bot"]
     image: postgres
     env_file:
       - ./manuals/.env
     volumes:
       - postgres_manuals_data:/var/lib/postgresql/data
   manuals:
+    profiles: ["no-bot"]
     container_name: manuals-container
     image: manuals
     build: ./manuals

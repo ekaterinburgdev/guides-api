@@ -3,6 +3,7 @@ from typing import List
 
 from app.internal.infrastructure.notion_client import NotionClient
 from app.models import PageElement, PageTreeNode
+from .update_request import UpdateRequest
 
 from .content_getters import get_default_element_content, get_image_element_content_webp
 from .contents import ROOT_PAGE_ID
@@ -10,11 +11,15 @@ from .contents import ROOT_PAGE_ID
 notion_client = NotionClient()
 
 
+def check_db_with_request(request: UpdateRequest):
+    return check_db(request.page_tree_node, request.force_update)
+
 def check_db(node: PageTreeNode = None, force_update: bool=False):
     if not node:
         node = PageTreeNode.objects.filter(id=ROOT_PAGE_ID).first()
         if not node:
             raise Exception("No root page node")
+    print(f"[Update start: {node.id}]")
     check_page(node.id, node, force_update=force_update)
     for child in node.child_nodes.all():
         check_db(child, force_update=force_update)
