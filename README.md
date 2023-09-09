@@ -8,6 +8,8 @@ The application caches content from Notion via Notion API into PostgreSQL databa
 
 ## API
 
+> TODO: sync API with front-end https://github.com/ekaterinburgdev/guides/blob/main/api/apiPage.js
+
 ### Notion pages tree 
 ```
 https://guides-api.ekaterinburg.city/api/tree
