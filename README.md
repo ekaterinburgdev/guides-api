@@ -25,7 +25,9 @@ Get Notion page content by `id`
 
 1. Install [Docker](https://docs.docker.com/get-docker/)
 
-2. Run application via [`docker compose`](https://docs.docker.com/compose/)
+2. Create `manuals/.env` file from [`manuals/.env.example`](https://github.com/ekaterinburgdev/guides-api/blob/main/manuals/.env.example) with secrets
+
+3. Run application via [`docker compose`](https://docs.docker.com/compose/)
 ```bash
 docker compose build
 ```
