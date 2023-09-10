@@ -36,7 +36,7 @@ STATE = UpdateState()
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://guides-api-test.ekaterinburg.design"]
+CSRF_TRUSTED_ORIGINS = ["https://guides-api.ekaterinburg.city"]
 
 
 # Application definition
