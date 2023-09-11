@@ -10,18 +10,20 @@ The application caches content from Notion via Notion API into PostgreSQL databa
 
 > TODO: sync API with front-end https://github.com/ekaterinburgdev/guides/blob/main/api/apiPage.js
 
-### Notion pages tree 
+### Main page
 ```
 https://guides-api.ekaterinburg.city/api/tree
 ```
-Returns Notion page tree (contains `id`, `name`, `url`, `cover`)
 
 ### Get page
 ```
-https://guides-api.ekaterinburg.city/api/content?id=[id]
+https://guides-api.ekaterinburg.city/api/content?id=<id>
 ```
-Get Notion page content by `id`
 
+### Search page
+```
+https://guides-api.ekaterinburg.city/api/search?pattern=<query>
+```
 
 ## Development
 
@@ -29,9 +31,19 @@ Get Notion page content by `id`
 
 2. Create `manuals/.env` file from [`manuals/.env.example`](https://github.com/ekaterinburgdev/guides-api/blob/main/manuals/.env.example) with secrets
 
-3. Run application via [`docker compose`](https://docs.docker.com/compose/)
-```bash
-docker compose build
+3. _(only first time)_ Create static volume folder 
+```sh
+mkdir /usr/local/docker/manuals-static-volume/
+```
+
+4. _(only first time)_ Run database migrations
+```sh
+docker compose exec manuals python manage.py migrate
+```
+
+5. Run Python Django & Telegram bot via [`docker compose`](https://docs.docker.com/compose/)
+```sh
+docker compose up -d --build
 ```
 
 <br />
