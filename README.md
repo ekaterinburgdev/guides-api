@@ -8,42 +8,96 @@ The application caches content from Notion via Notion API into PostgreSQL databa
 
 ## API
 
-> TODO: sync API with front-end https://github.com/ekaterinburgdev/guides/blob/main/api/apiPage.js
+### Pages tree
+Returns tree of all page urls
 
-### Main page
-```
+```sh
 https://guides-api.ekaterinburg.city/api/tree
 ```
 
 ### Get page
-```
-https://guides-api.ekaterinburg.city/api/content?id=<id>
+Returns page content
+
+```sh
+# Section
+https://guides-api.ekaterinburg.city/api/content/street-name-plates
+
+# Section + Page
+https://guides-api.ekaterinburg.city/api/content/street-name-plates/general-provisions
 ```
 
-### Search page
+- `street-name-plates` — section name
+- `general-provisions` — page name
+
+
+### Search
+Search pages by query
+
+```sh
+https://guides-api.ekaterinburg.city/api/search?pattern=скамья
 ```
-https://guides-api.ekaterinburg.city/api/search?pattern=<query>
+- `скамья` — search query
+
+
+## Debug API
+
+> TODO: describe `dbretrieve` & `dbchildren` methods
+
+Methods for raw Notion data debugging
+
+### Get page Notion raw metadata
+
+
+```sh
+https://guides-api.ekaterinburg.city/api/test/retrieve?id=5604e0725f794708b9094b7ce49a46f7
 ```
+- `5604e0725f794708b9094b7ce49a46f7` — Notion page id
+
+### Get page Notion raw content
+```sh
+https://guides-api.ekaterinburg.city/api/test/children?id=5604e0725f794708b9094b7ce49a46f7
+```
+- `5604e0725f794708b9094b7ce49a46f7` — Notion page id
+
+## Telegram bot commands
+The site is managed via a telegram bot
+
+`/update` — update content
+
+`/update -f` — force update (rebuild tree, reload images, etc.)
 
 ## Development
 
 1. Install [Docker](https://docs.docker.com/get-docker/)
 
-2. Create `manuals/.env` file from [`manuals/.env.example`](https://github.com/ekaterinburgdev/guides-api/blob/main/manuals/.env.example) with secrets
 
-3. _(only first time)_ Create static volume folder 
+2. Create `manuals/.env` file from [`manuals/.env.example`](https://github.com/ekaterinburgdev/guides-api/blob/main/manuals/.env.example) with secrets
+- Notion token
+- Django settings
+- PostgreSQL settings
+- Telegram (bot token from [@BotFather](https://telegram.me/BotFather) + master chat id from [@userinfobot](https://t.me/userinfobot)).
+
+
+3. _(only first time)_ Create static volume folder
+> TODO: create folder automatically in project folder (the folder path must be contained in `.gitignore`)
 ```sh
 mkdir /usr/local/docker/manuals-static-volume/
 ```
+
 
 4. _(only first time)_ Run database migrations
 ```sh
 docker compose exec manuals python manage.py migrate
 ```
 
-5. Run Python Django & Telegram bot via [`docker compose`](https://docs.docker.com/compose/)
+5. Run Django & Telegram bot
 ```sh
 docker compose up -d --build
+```
+
+6. _(only first time)_ Send message to Telegram bot to force update
+```
+`/update -f`
 ```
 
 <br />
