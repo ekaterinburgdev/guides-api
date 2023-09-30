@@ -36,6 +36,10 @@ class ContentSearchView(View):
     
 def search_pattern(pattern: str, search_limit: int, guide_suggestions_limit: int):
     pattern = pattern.strip()
+    if pattern == '':
+        return {
+            "guideSuggestions": guide_suggestions
+        }
     search_results: List[PrerenderedPageElement] = list(PrerenderedPageElement.objects.filter(text_content__search=pattern))
     all_matches: Dict[str, list] = {}
     for result in search_results:
@@ -45,7 +49,10 @@ def search_pattern(pattern: str, search_limit: int, guide_suggestions_limit: int
             continue
         if not current_guide_matches:
             all_matches[guide_id] = []
-        matches: List[str] = re.findall(f"((?:[^\\s{PUNCTS}]+[\\s{PUNCTS}]+){{0,5}}[^\\s{PUNCTS}]*{pattern}[^\\s{PUNCTS}]*(?:[\\s{PUNCTS}]+[^\\s{PUNCTS}]*){{0,5}})", result.text_content, re.DOTALL | re.IGNORECASE)
+        matches: List[str] = re.findall(r"((?:[^\s,.()[\]{{}}\"'`<>]+[\s,.()[\]{{}}\"'`<>]+){0,5}[^\s,.()[\]{{}}\"'`<>]*"
+                                        + pattern
+                                        + r"[^\s,.()[\]{{}}\"'`<>]*(?:[\s,.()[\]{{}}\"'`<>]+[^\s,.()[\]{{}}\"'`<>]*){0,5})",
+                                        result.text_content, re.DOTALL | re.IGNORECASE)
         section_name = result.section_name
         url = result.url
         suggestions = []
