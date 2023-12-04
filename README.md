@@ -19,10 +19,7 @@ https://guides-api.ekaterinburg.city/api/tree
 Returns page section or page content
 
 ```sh
-# Section
 https://guides-api.ekaterinburg.city/api/content/street-name-plates
-
-# Section + Page
 https://guides-api.ekaterinburg.city/api/content/street-name-plates/general-provisions
 ```
 
@@ -92,15 +89,17 @@ mkdir /usr/local/docker/manuals-static-volume/
 docker compose exec manuals python manage.py migrate
 ```
 
-5.1 To collect Django static for pretty admin
-```
-docker compose exec manuals python manage.py collectstatic
-```
+5. Configure admin panel
 
-5.2 _(optional)_ Create Django user to view Database in `https://<site-url>/admin`
-```
-docker compose exec manuals python manage.py createsuperuser
-```
+    5.1 To collect Django static for pretty admin
+    ```
+    docker compose exec manuals python manage.py collectstatic
+    ```
+
+    5.2 _(optional)_ Create Django user to view Database in `https://<site-url>/admin`
+    ```
+    docker compose exec manuals python manage.py createsuperuser
+    ```
 
 6. Run Django & Telegram bot
 ```sh
